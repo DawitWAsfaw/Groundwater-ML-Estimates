@@ -18,7 +18,7 @@ Dawit W. Asfaw, Ryan Smith, Sayantan Majumdar, Katherine Grote, V. Lakshmi, Bin 
 Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10 %. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
 
 # Affiliations
-![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/161fb5af-5ccd-4d18-b36b-53080cc2c113)
+![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/6c5743ea-a83e-4f83-8363-eb0585ee0b72)
 
 # Funding Agency
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/3125ed01-e1c8-416e-b4a6-131febe2f056)
