@@ -14,6 +14,9 @@ Dawit W. Asfaw, Ryan Smith, Sayantan Majumdar, Katherine Grote, V. Lakshmi, Bin 
 # Model training and testing data spatial distribution map
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fa9a75ca-9ddb-43f3-b67a-8ff92815271c)
 # Model Prediction
+## Point Scale Model 
+
+## Grid Scale Model
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fe772a0a-01b0-48c9-81f4-3bb24b668a6e)
 Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10 %. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
 
