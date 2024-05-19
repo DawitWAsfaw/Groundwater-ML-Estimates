@@ -17,7 +17,7 @@ conda env create -f  geospatial_packages.yml
 Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10 %. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
 
 # Affiliations
-![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/e61675f5-231f-4899-afcd-35e569bb4367)
+![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/1ea0f0c1-b380-4092-8a4b-f8c05497d11d)
 
 # Funding Agency
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/3125ed01-e1c8-416e-b4a6-131febe2f056)
