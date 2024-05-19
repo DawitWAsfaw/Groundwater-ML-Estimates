@@ -16,7 +16,8 @@ Observed vs predicted values within 2 km by 2 km pixel from spatial hold out mod
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/3125ed01-e1c8-416e-b4a6-131febe2f056)
 
 # Affiliations
-![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/a311ab22-a3e6-4858-97de-eb40338b72bd) ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/11506329-4040-4a9b-abbc-437d5d9edd53)
+![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/e61675f5-231f-4899-afcd-35e569bb4367)
+
 
 
 
