@@ -12,11 +12,13 @@ The models are built using [Anaconda](https://www.anaconda.com/download) environ
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fe772a0a-01b0-48c9-81f4-3bb24b668a6e)
 Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10 %. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
 
+# Affiliations
+![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/e61675f5-231f-4899-afcd-35e569bb4367)
+
 # Funding Agency
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/3125ed01-e1c8-416e-b4a6-131febe2f056)
 
-# Affiliations
-![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/e61675f5-231f-4899-afcd-35e569bb4367)
+
 
 
 
