@@ -679,14 +679,12 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
 
 #  ================================================================================================================  
      
-shp_grid = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/groundwater_withdrawal_prediciton/'\
-    'for_monty/for_Monty_updates/shp_files/ref_grid.shp'
-ref_rast = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/groundwater_withdrawal_prediciton/'\
-    'for_monty/for_Monty_updates/ref_rasters/ref_raster_grid.tif'
+shp_grid = '/shp_files/ref_grid.shp'
+ref_rast = '/ref_rasters/ref_raster_grid.tif'
     
-model_input_file = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/topic_1/ml_input/ml_input.csv'
+model_input_file = ''
 
-base_dir = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/topic_1/spatial/5_17_2024/'
+base_dir = ''
 
 
 randomForest_spatial_holdout_model(model_input_file,base_dir,shp_grid,ref_rast)
