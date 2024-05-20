@@ -15,7 +15,8 @@ Dawit W. Asfaw, Ryan Smith, Sayantan Majumdar, Katherine Grote, V. Lakshmi, Bin 
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fa9a75ca-9ddb-43f3-b67a-8ff92815271c)
 # Model Prediction
 ## Point Scale Model - Actual Vs Predict time series plot 
-![Point_scale_actual_observed_timeseries_plot](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/aeaa1e0f-450a-4b06-b89d-27cbf80c7378)
+![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/d18ec2f6-26ed-4382-a3f0-04a36b66041f)
+
 
 ## Grid Scale Model
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fe772a0a-01b0-48c9-81f4-3bb24b668a6e)
