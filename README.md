@@ -19,7 +19,7 @@ Dawit W. Asfaw, Ryan Smith, Sayantan Majumdar, Katherine Grote, V. Lakshmi, Bin 
 Point scale time series data. Annual mean actual vs predicted time series plot for models trained on 90% (a), 80% (b), 60% (c), 40% (d), 20% (e), and 10% (f). Red lines are predicted values and blue lines show observed groundwater withdrawal data.
 
 ## Grid Scale Model
-![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fe772a0a-01b0-48c9-81f4-3bb24b668a6e)
+![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/7083c392-730e-4c62-915f-1e6d25e188c7)
 Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10 %. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
 
 # Affiliations
