@@ -20,7 +20,7 @@ Point scale time series data. Annual mean actual vs predicted time series plot f
 
 ## Grid Scale Model
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/7083c392-730e-4c62-915f-1e6d25e188c7)
-Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10 %. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
+Observed vs predicted values within 2 km by 2 km pixel from spatial hold out model trained on 10%. a) Actual groundwater withdrawals b) Predicted groundwater withdrawals c) Actual vs predicted scatter plot, d) Residual of predicted values vs residual.
 
 # Affiliations
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/6c5743ea-a83e-4f83-8363-eb0585ee0b72)
