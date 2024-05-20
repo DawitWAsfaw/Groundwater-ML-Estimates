@@ -208,8 +208,9 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
 #  ================================================================================================================        
       
     
-        ranFor_model_optimized =RandomForestRegressor(max_features= 4, 
+        ranFor_model_optimized =RandomForestRegressor(max_features= 5, 
                                                       n_estimators= 200,
+                                                      max_depth=9,
                                                       random_state=111, 
                                                       n_jobs=-1)
         
@@ -285,7 +286,7 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
 
 #  ================================================================================================================  
 #      Actual training data used for development of randforest model
-        train_actual = train_data[[ 'PDIV_ID','gridid','year', 'long_nad83', 'lat_nad83','pump_mm3']]
+        train_actual = train_data[[ 'gridid','year', 'long_nad83', 'lat_nad83','pump_mm3']]
         train_actual = train_actual.rename(columns={'pump_mm3':"actualTr_mm3" }, errors="raise")
 
         train_actual.to_csv(base_dir + train_dir + 'train_actual_{}P.csv'.format(num_str ),index=False)
@@ -293,17 +294,17 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
    
         for year in train_actual['year'].unique():
             year_data = train_actual[train_actual['year']==year]
-            new_data = year_data[['PDIV_ID','gridid', 'long_nad83', 'lat_nad83','year','actualTr_mm3']].dropna(axis=0)
+            new_data = year_data[['gridid', 'long_nad83', 'lat_nad83','year','actualTr_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + train_dir + csv_folder + 'train_actual_{}P_{}.csv'.format(num_str , year),index=False)
            
         csvs2shps(input_dir=base_dir + train_dir + csv_folder, 
                   output_dir=base_dir + train_dir + shp_folder,
-                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(2, 3)) 
+                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(1, 2)) 
         
 #  ================================================================================================================  
 #       Predicted training data 
         train_predict_mm = ranFor_model_optimized.predict(train_x)
-        train_predict= train_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
+        train_predict= train_data[[ 'gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
         train_predict['train_predict_mm']=  train_predict_mm
         
         train_predict['predTr_mm3'] =train_predict['train_predict_mm']* train_predict['irr_area_mm2']
@@ -314,13 +315,13 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
         for year in train_predict['year'].unique():
             year_data =train_predict[train_predict['year']==year]
             #print(year_data)
-            new_data = year_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','predTr_mm3']].dropna(axis=0)
+            new_data = year_data[[ 'gridid','long_nad83', 'lat_nad83','year','predTr_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + train_dir + csv_folder + 'train_predict_{}P_{}.csv'.format(num_str, year),index=False)
             
             
             
 #  ================================================================================================================  
-        train_mean_pump = train_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
+        train_mean_pump = train_data[[ 'gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
         train_mean_pump['pump_mean'] = train_y_mean
         train_mean_pump['meanTr_mm3'] =train_mean_pump['pump_mean']* train_mean_pump['irr_area_mm2']
         train_mean_pump.to_csv(base_dir + train_dir + 'train_mean_{}P.csv'.format(num_str ),index=False)
@@ -328,13 +329,13 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
         for year in train_mean_pump['year'].unique():
             year_data =train_mean_pump[train_mean_pump['year']==year]
             #print(year_data)
-            new_data = year_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','meanTr_mm3']].dropna(axis=0)
+            new_data = year_data[[ 'gridid','long_nad83', 'lat_nad83','year','meanTr_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + train_dir + csv_folder + 'train_mean_{}P_{}.csv'.format(num_str , year),index=False)
             
         print('Converting csv to shp....')
         csvs2shps(input_dir=base_dir + train_dir + csv_folder, 
                   output_dir=base_dir + train_dir + shp_folder,
-                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(2, 3))  
+                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(1, 2))  
        
         print('aggregating values in a grid....')
       
@@ -401,7 +402,7 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
     
 #  ================================================================================================================  
 #     Actual Testing data to test randforest model
-        test_actual = test_data[['PDIV_ID','gridid', 'long_nad83', 'lat_nad83','year','pump_mm3']]
+        test_actual = test_data[['gridid', 'long_nad83', 'lat_nad83','year','pump_mm3']]
         test_actual = test_actual.rename(columns={'pump_mm3': "actualTe_mm3"}, errors="raise")
 
         test_actual.to_csv(base_dir + test_dir + 'test_actual_{}P.csv'.format(num_str ),index=False)
@@ -411,16 +412,16 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
         for year in test_actual['year'].unique():
             year_data =test_actual[test_actual['year']==year]
             #print(year_data)
-            new_data = year_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','actualTe_mm3']].dropna(axis=0)
+            new_data = year_data[[ 'gridid','long_nad83', 'lat_nad83','year','actualTe_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + test_dir + csv_folder +  'test_actual_{}P_{}.csv'.format(num_str , year),index=False)
         
         
-
+        
 #  ================================================================================================================  
 #      Predicted Test data to assess model performance for unfamiliar dataset
         test_predict_mm = ranFor_model_optimized.predict(test_x)
 
-        test_predict = test_data[['PDIV_ID','gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
+        test_predict = test_data[[ 'gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
         test_predict['predTe_mm']=  test_predict_mm
 #  ================================================================================================================
 # actual and predicted point scale model - csv in put for time series plots
@@ -431,10 +432,10 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
         test_actual_pt['pump_mm _{}'.format(num_str)] = test_act_mm
         
         test_actual_pt['predTe_mm_{}'.format(num_str)] =  test_predict_mm
-        
-    
+           
         actual_pred_pt=  pd.concat([actual_pred_pt,test_actual_pt],axis=1)
-#  ================================================================================================================        
+#  ================================================================================================================
+        
         test_predict['predTe_mm3'] = test_predict['irr_area_mm2']* test_predict['predTe_mm']
         
         test_predict =test_predict.drop(['irr_area_mm2','predTe_mm'],axis=1)
@@ -444,26 +445,26 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
         
         for year in test_predict['year'].unique():
             year_data = test_predict[test_predict['year']==year]
-            new_data = year_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','predTe_mm3']].dropna(axis=0)
+            new_data = year_data[[ 'gridid','long_nad83', 'lat_nad83','year','predTe_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + test_dir + csv_folder + 'test_predict_{}P_{}.csv'.format(num_str ,year),index=False)
             
-
+        
 #  ================================================================================================================  
-        test_mean_pump = test_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
+        test_mean_pump = test_data[[ 'gridid','long_nad83', 'lat_nad83','year','irr_area_mm2']]
         test_mean_pump['pump_mean'] = test_y_mean
         test_mean_pump['meanTe_mm3'] =test_mean_pump['pump_mean']* test_mean_pump['irr_area_mm2']
-        test_mean_pump.to_csv(base_dir + test_dir + 'test_mean_{}P.csv'.format(num_str),index=False)
+        test_mean_pump.to_csv(base_dir + test_dir + 'test_mean_{}P.csv'.format(num_str ),index=False)
         
         for year in test_mean_pump['year'].unique():
             year_data =test_mean_pump[test_mean_pump['year']==year]
             #print(year_data)
-            new_data = year_data[[ 'PDIV_ID','gridid','long_nad83', 'lat_nad83','year','meanTe_mm3']].dropna(axis=0)
+            new_data = year_data[[ 'gridid','long_nad83', 'lat_nad83','year','meanTe_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + test_dir + csv_folder + 'test_mean_{}P_{}.csv'.format(num_str , year),index=False)
             
         
         csvs2shps(input_dir=base_dir + test_dir + csv_folder, 
                   output_dir=base_dir + test_dir + shp_folder,
-                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(2, 3))
+                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(1, 2))
         
         
         aggregate_pointValues_ingrid(input_dir=base_dir + test_dir + shp_folder,
@@ -540,12 +541,12 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
     
         for year in actual['year'].unique():
             year_data = actual[actual['year']==year]
-            new_data = year_data[['PDIV_ID','gridid', 'long_nad83', 'lat_nad83','year','actual_mm3']].dropna(axis=0)
+            new_data = year_data[['gridid', 'long_nad83', 'lat_nad83','year','actual_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + actual_dir + csv_folder + 'actual_{}P_{}.csv'.format(num_str , year),index=False)
            
         csvs2shps(input_dir=base_dir + actual_dir + csv_folder, 
                   output_dir=base_dir + actual_dir + shp_folder,
-                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(2, 3))
+                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(1, 2))
         
         aggregate_pointValues_ingrid(input_dir=base_dir + actual_dir + shp_folder,
                                       shp_grid = shp_grid,ref_rast=ref_rast, 
@@ -560,12 +561,12 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
         
         for year in predicted['year'].unique():
             year_data = predicted[predicted['year']==year]
-            new_data = year_data[['PDIV_ID','gridid', 'long_nad83', 'lat_nad83','year','predicted_mm3']].dropna(axis=0)
+            new_data = year_data[['gridid', 'long_nad83', 'lat_nad83','year','predicted_mm3']].dropna(axis=0)
             new_data.to_csv(base_dir + predicted_dir + csv_folder + 'predicted_{}P_{}.csv'.format(num_str , year),index=False)
         print('converting csv files to shp files')
         csvs2shps(input_dir=base_dir + predicted_dir + csv_folder, 
                   output_dir=base_dir + predicted_dir + shp_folder,
-                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(2, 3))
+                  pattern='*.csv', target_crs='EPSG:4326', delim=',',long_lat_pos=(1, 2))
         print('aggregating withdrawal values in a 2 km  grid cell and converting shp files to raster')
         aggregate_pointValues_ingrid(input_dir=base_dir + predicted_dir + shp_folder,
                                       shp_grid = shp_grid,ref_rast=ref_rast, 
@@ -648,7 +649,7 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
     
     train_yearly_aver.to_csv(base_dir + 'train_yearly_aver_5_13_24.csv',index=False)
     test_yearly_aver.to_csv(base_dir + 'test_yearly_aver_5_13_24.csv',index=False)
-    
+#  ================================================================================================================      
     actual_pred_pt.columns.values[4] = 'wateryear' 
     actual_pred_pt.columns.values[0] ='WELL_ID'
     actual_pred_pt_column = ['WELL_ID',
@@ -666,9 +667,6 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
     actual_pred_pt =  actual_pred_pt[actual_pred_pt_column]
     
     actual_pred_pt.to_csv(base_dir + 'actual_pred_pt.csv',index=False)
-    
-    
-
 #  ================================================================================================================  
 
     
@@ -676,12 +674,19 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
    
     grid_scale_actual_vs_predicted_timeseries_plot(test_yearly_aver, base_dir)
     point_scale_actual_vs_predicted_timeseries_plot(actual_pred_pt, base_dir)
+
+   
+
 #  ================================================================================================================  
      
-shp_grid = '/shp_files/ref_grid.shp'
-ref_rast = '/ref_rasters/ref_raster_grid.tif'  
-model_input_file = '/ml_input/ml_input.csv'
-base_dir = ''
+shp_grid = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/groundwater_withdrawal_prediciton/'\
+    'for_monty/for_Monty_updates/shp_files/ref_grid.shp'
+ref_rast = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/groundwater_withdrawal_prediciton/'\
+    'for_monty/for_Monty_updates/ref_rasters/ref_raster_grid.tif'
+    
+model_input_file = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/topic_1/ml_input/ml_input.csv'
+
+base_dir = 'C:/Users/dasfaw/OneDrive - Colostate/Documents/Spring2024/Research/topic_1/spatial/5_17_2024/'
 
 
 randomForest_spatial_holdout_model(model_input_file,base_dir,shp_grid,ref_rast)
