@@ -108,7 +108,6 @@ def plot_featureImportance(ranFor_model_optimized, train_x, plots_dir):
     imp_df = pd.DataFrame(imp_dict)
     imp_df.sort_values(by=['Feature_importance'], ascending=False, inplace=True)
     plt.figure(figsize=(20, 8))
-    plt.rcParams['font.size'] = 20
     sns.barplot(x=imp_df['feature_names'], y=imp_df['Feature_importance'], color ='gray')
     plt.xticks(rotation=0)
     plt.ylabel('Gini Importance')
@@ -136,7 +135,7 @@ def spatio_temporal_actual_vs_predicted_rasterplot(model_input_file, actual_tiff
     min_lat = min(lat)
     max_lat = max(lat)
     
-    fig, axs = plt.subplots(2,2,squeeze=False,figsize=(15,7),layout="constrained")  
+    fig, axs = plt.subplots(2,2,squeeze=False,figsize=(15,10),layout="constrained")  
     actual_tiff = rio.open(actual_tiff_file)
     actual_tiff_matrix= actual_tiff.read(1)
     actual_tiff_matrix= ma.masked_greater(actual_tiff_matrix , 300,copy=True)
@@ -219,7 +218,7 @@ def temporal_actual_vs_predicted_rasterplot(model_input_file, actual_tiff_file, 
    min_lat = min(lat)
    max_lat = max(lat)
      
-   fig, axs = plt.subplots(2,2,squeeze=False,figsize=(15,7),layout="constrained")
+   fig, axs = plt.subplots(2,2,squeeze=False,figsize=(15,10),layout="constrained")
    actual_tiff = rio.open(actual_tiff_file)
    actual_tiff_matrix= actual_tiff.read(1)
    actual_tiff_matrix= ma.masked_greater(actual_tiff_matrix , 300,copy=True)
@@ -284,10 +283,10 @@ def temporal_actual_vs_predicted_rasterplot(model_input_file, actual_tiff_file, 
    plt.rcdefaults()
     
     
-def actual_vs_predicted_timeseries_plot(test_yearly_aver, base_dir):
+def grid_scale_actual_vs_predicted_timeseries_plot(test_yearly_aver, base_dir):
     """
     Create time series plots for actual vs predicted values for models built using 10%, 20%, 40%, 60%, 80%, 90% training data
-    : test_yearly_aver: dataframe holding actual and predicted values for all 17 models
+    : test_yearly_aver: dataframe holding actual and predicted values for all 9 grid scale models
     : plots_dir : directory path to store the plots 
     : return: none
     """
@@ -352,4 +351,75 @@ def actual_vs_predicted_timeseries_plot(test_yearly_aver, base_dir):
 
     
     plt.tight_layout()
-    plt.savefig((base_dir  +   'actual_observed_timeseries_plot.png'), dpi=600)
+    plt.savefig((base_dir  +   'grid_scale_actual_observed_timeseries_plot.png'), dpi=600)
+
+def point_scale_actual_vs_predicted_timeseries_plot(actual_pred_pt, base_dir):
+    """
+    Create time series plots for actual vs predicted values for models built using 10%, 20%, 40%, 60%, 80%, 90% training data
+    : actual_pred_pt: dataframe holding actual and predicted values for all 9 temporal scale models
+    : plots_dir : directory path to store the plots 
+    : return: none
+    """
+    actual_pred_pt = actual_pred_pt[actual_pred_pt.WELL_ID ==3297] # you can choose different well_id
+    plt.close('all')
+    fig, ((ax1, ax2),(ax3,ax4),(ax5,ax6)) = plt.subplots(3, 2,squeeze=False,figsize=(15,12))
+    fig.supylabel('Groundwater withdrawals [mm]')
+    fig.supxlabel('Year')
+    
+    # ===============================================================================================================================================
+    ax1.plot(actual_pred_pt['wateryear'],actual_pred_pt['pump_mm _0'], linewidth=1,color ='blue',label='Actual')
+    ax1.plot(actual_pred_pt['wateryear'],actual_pred_pt['predTe_mm_10'], linewidth=1,color ='red',label='Predicted')
+
+    ax1.annotate('a)',xy=(2008, 47),fontsize="20")
+    ax1.legend(loc='upper right',fontsize="20",frameon =False)
+    ax1.set_facecolor("white")
+    
+
+    # ===============================================================================================================================================
+
+    ax2.plot(actual_pred_pt['wateryear'],actual_pred_pt['pump_mm _0'], linewidth=1,color ='blue',label='Actual')
+    ax2.plot(actual_pred_pt['wateryear'],actual_pred_pt['predTe_mm_20'], linewidth=1,color ='red',label='Predicted')
+
+    ax2.annotate('b)',xy=(2008, 47),fontsize="20")
+    ax2.legend(loc='upper right',fontsize="20",frameon =False)
+    ax2.set_facecolor("white")
+
+    # ===============================================================================================================================================
+    ax3.plot(actual_pred_pt['wateryear'],actual_pred_pt['pump_mm _0'], linewidth=1,color ='blue',label='Actual')
+    ax3.plot(actual_pred_pt['wateryear'],actual_pred_pt['predTe_mm_40'], linewidth=1,color ='red',label='Predicted')
+
+    ax3.annotate('c)',xy=(2008, 47),fontsize="20")
+    ax3.legend(loc='upper right',fontsize="20",frameon =False)
+    ax3.set_facecolor("white")
+  
+    # ===============================================================================================================================================
+    ax4.plot(actual_pred_pt['wateryear'],actual_pred_pt['pump_mm _0'], linewidth=1,color ='blue',label='Actual')
+    ax4.plot(actual_pred_pt['wateryear'],actual_pred_pt['predTe_mm_60'], linewidth=1,color ='red',label='Predicted')
+
+
+    ax4.legend(loc='upper right',fontsize="20",frameon =False)
+    ax4.annotate('d)',xy=(2008, 47),fontsize="20")
+    ax4.set_facecolor("white")
+
+
+    # ===============================================================================================================================================
+    ax5.plot(actual_pred_pt['wateryear'],actual_pred_pt['pump_mm _0'], linewidth=1,color ='blue',label='Actual')
+    ax5.plot(actual_pred_pt['wateryear'],actual_pred_pt['predTe_mm_80'], linewidth=1,color ='red',label='Predicted')
+
+    ax5.annotate('e)',xy=(2008, 47),fontsize="20")
+    ax5.legend(loc='upper right',fontsize="20",frameon =False)
+    ax5.set_facecolor("white")
+   
+
+    # ===============================================================================================================================================
+    ax6.plot(actual_pred_pt['wateryear'],actual_pred_pt['pump_mm _0'], linewidth=1,color ='blue',label='Actual')
+    ax6.plot(actual_pred_pt['wateryear'],actual_pred_pt['predTe_mm_90'], linewidth=1,color ='red',label='Predicted')
+
+    ax6.annotate('f)',xy=(2008, 47),fontsize="20")
+    ax6.legend(loc='upper right',fontsize="20",frameon =False)
+    ax6.set_facecolor("white")
+
+    
+    plt.tight_layout()
+    plt.savefig((base_dir  +   'Point_scale_actual_observed_timeseries_plot.png'), dpi=600)
+
