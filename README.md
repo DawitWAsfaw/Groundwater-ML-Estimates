@@ -16,7 +16,7 @@ Dawit W. Asfaw, Ryan Smith, Sayantan Majumdar, Katherine Grote, V. Lakshmi, Bin 
 # Model Prediction
 ## Point Scale Model - Actual Vs Predict time series plot 
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/d18ec2f6-26ed-4382-a3f0-04a36b66041f)
-
+Point scale time series data. Annual mean actual vs predicted time series plot for models trained on 90% (a), 80% (b), 60% (c), 40% (d), 20% (e), and 10% (f). Red lines are predicted values and blue lines show observed groundwater withdrawal data.
 
 ## Grid Scale Model
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/fe772a0a-01b0-48c9-81f4-3bb24b668a6e)
