@@ -208,9 +208,8 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
 #  ================================================================================================================        
       
     
-        ranFor_model_optimized =RandomForestRegressor(max_features= 5, 
+        ranFor_model_optimized =RandomForestRegressor(max_features= 4, 
                                                       n_estimators= 200,
-                                                      max_depth=9,
                                                       random_state=111, 
                                                       n_jobs=-1)
         
@@ -674,6 +673,17 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
    
     grid_scale_actual_vs_predicted_timeseries_plot(test_yearly_aver, base_dir)
     point_scale_actual_vs_predicted_timeseries_plot(actual_pred_pt, base_dir)
+    
+    fig, ax = plt.subplots()
+    ax.plot(test_yearly_aver['wateryear'],test_yearly_aver['test_actual'], linewidth=1,color ='blue',label='Actual')
+    ax.plot(test_yearly_aver['wateryear'],test_yearly_aver['test_predict_90P'], linewidth=1,color ='red',label='Predicted')
+
+    ax.set(xlabel=' Year', ylabel='Groundwater withdrawals [mm]')
+    ax.annotate('a)',xy=(2008, 47),fontsize="20")
+    ax.legend(loc='upper right',frameon =False)
+    ax.set_facecolor("white")
+
+    fig.savefig(base_dir + 'test_predict_90P.png')
 
    
 
@@ -682,9 +692,9 @@ def randomForest_spatial_holdout_model(model_input_file, base_dir,shp_grid,ref_r
 shp_grid = '/shp_files/ref_grid.shp'
 ref_rast = '/ref_rasters/ref_raster_grid.tif'
     
-model_input_file = ''
+model_input_file = ' '
 
-base_dir = ''
+base_dir = ' '
 
 
 randomForest_spatial_holdout_model(model_input_file,base_dir,shp_grid,ref_rast)
