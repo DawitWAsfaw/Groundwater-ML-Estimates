@@ -1,33 +1,60 @@
-Groundwater withdrawal prediction pipeline
-Python code steps
 
-1.  Create folder using - createfolders and subfolders.py
-2.  Create a folder manually to save raster files
-2.  Download data sets from GEE using file(shp_files/ gmd4_boundary_wgs84.shp) - using downloadFrom_gee.py
-3.  Create folders manually to save subset shapefiles ( a folder for gwl and gwl change,  a folder for quifer thickness shp files)
-4.  Subset yearly data from geodatabase 
-     4.1  Groundwater level & groundwater level change from file name (raw_data/nw_ks_hpa_wells.gdb)-   subset_yrly_gwl_gwlc.py
-	 Interpolate using kriging
-	 4.1.1 Groundwater level and groundwater level data using - interpolate_gwl_gwlc_from_shpfiles.py 
-	 
-	 4.2  Aquifer thickness from file name (raw_data/gmd4_aquiferThickness_deg.shp) -   subset_aquiferthickness.py
-	 Interpolate using kriging
-     4.2.1  Aquifer thickness - interpolate_aquiferthickness_from_shpfiles.py
-	 
-Create a folder to save projected raster files
-5. Reproject raster files to NAD 1983 UTM Zone 14N using file(ref_rasters/reproject_ref.tif) - reproject_rasters.py
-6. Create a folder to save  yearly csv file 
-7. Extract raster files using(shp_files/unique_well_id_grid.shp) - extract_rasters_values_at_points.py
-Note - Save all the excel files in one folder
-8.  Concatenate yearly  csv files  using -  concat_csv_files.py
-9. Subset groundwater withdrawals to yealy data from name(raw_data/groundwater_withdrawals.gdb) - groundwater_withdrawals.gdb
- using - subset_withdrawals.py ( save pump_all.csv to concatenated csv files folder)
-10. Copy the crop water demand csv file (raw_data/cropwater_demand_all.csv) to the folder where the concat_csv_files saved
-11. Merge the concatenated individual variables in to one csv file using - merge_csv_files.py - this is the final csv ingested to ml analysis
-Note that change field name (csv fil created using step 11)cellid to gridid ( the aggregate_pointValues_ingrid has a cellid field and willnot aggregate values) 
-12.Run machine learning analysis - randomForest_spatial_holdout_model.py
-input files (ref_rasters/ref_raster_grid.tif, shp_files/ref_grid.shp)
-Note - the following Python files run with in the main Ml Python codes - randomForest_spatial_holdout_model.py
-   1. rasterToDataframe.py
-   2. aggregate_pointValues_ingrid.py
-   3. plotting.py
+# Groundwater withdrawal prediction pipeline steps
+#############################################
+#### Datasets - saved in raw_data folder
+1. Geodatabase - # Groundwater withdrawals - write the file names for python 
+                 # Aquifer thickness - shp
+		 # Groundwater level and groundwater level changes
+2. Crop water demand - csv file
+3. 2km  Reference raster
+4. 2km by 2km shapefile
+
+#############################################
+####   File management       
+5. Folders required to create: 
+Use the create folder function
+ 5.1 folders - with fraction holdout for testing  - For spatio temporal estimates
+      Total 10 folders - including subfolder names : (model, train, test,plots) 
+	  train and test folder should have - subfolder with names csv, shp, tiff
+   
+ 5.2 create  folders - temporal estimates
+    Name: Train, test, model,plots( holds PD,FI, observed vs predicted (time series and raster) plots) 
+    train and test folder should have - subfolder with names csv, shp, tiff
+#############################################
+#### Preprocessing datasets	
+6. Subset groundwater withdrawal from geodabase into yearly data and calculate withdrawals dividing 
+  irrigation water use by the reported area in acres feet
+  create a csv groundwater withdrawal file for all the observation data from 2008 - 2020 ( create csv files for individual years)
+
+7. Using the unique withdrawal well id, create a shapefile with the lat-long to use for extraction of predictor feature raster value at well location
+
+9.  Using the download_gee function download the following predictor variables:
+      1. precipitation
+      2. Evapotranspiration 
+      3  Temperature maximum
+      4. Temperature minumum
+      5. Slope
+Note: gmd4_boundary shapefile in WGS84 projection is required
+
+9. Subset groundwater level(gwl)  and groundwater level change(gwlc) values from geodabase and convert into yearly data
+ using the interporal_gwl_gwlc function interpolate and convert gwl and gwlc to raster
+ 
+10. Subset aquifer thickness values for gmd4 and create an interpolated raster map
+
+11. Reproject the raster files into NAD 1983 UTM Zone 14N
+
+12. Use unique withdrawal well station point shapefile (step 2) to extract the predictor features raster values at withdrawal location. 
+Note: extract values will be storage Variablename_year.csv 
+
+13. Compile the extracted values into csv files and merge individual predictor csv file into one csv file including withdrawal csv file ( step 1 )
+#############################################
+#### running machine learning 
+14. Run machine learning model- total two models
+  1. Spatio temporal estimate - 10 models
+  2. Temporal estimate  - 2 model ( run using testing sets for wet and dry years)  by manually changing the test years
+  3. Provide for the ml_function the parent directory for the 
+ 
+ csv files for 
+   1. error metrics
+   2. Yearly mean withdrawal observed and actual for individaul models and models
+   will be saved to the base_directory provided 
