@@ -2,19 +2,19 @@
 # Groundwater withdrawal prediction pipeline steps
 #############################################
 #### Datasets - saved in raw_data folder
-1. Geodatabase - # Groundwater withdrawals - write the file names for python 
-                 # Aquifer thickness - shp
-		 # Groundwater level and groundwater level changes
-2. Crop water demand - csv file
+1. Geodatabase - # Groundwater withdrawals - groundwater_withdrawals.gdb
+                 # Aquifer thickness - gmd4_aquiferThickness_deg.shp
+		 # Groundwater level and groundwater level changes - nw_ks_hpa_wells.gdb
+2. Crop water demand - cropwater_demand_all.csv
 3. 2km  Reference raster
-4. 2km by 2km shapefile
+4. 2km by 2km shapefile - ref_raster_grid.tif
 
 #############################################
 ####   File management       
 5. Folders required to create: 
 Use the create folder function
  5.1 folders - with fraction holdout for testing  - For spatio temporal estimates
-      Total 17 folders - including subfolder names : (model, train, test,plots) 
+      Total 10folders - including subfolder names : (model, train, test,plots) 
 	  train and test folder should have - subfolder with names csv, shp, tiff
    
  5.2 create  folders - temporal estimates
@@ -24,8 +24,7 @@ Use the create folder function
 #### Preprocessing datasets	
 6. Subset groundwater withdrawal from geodabase into yearly data and calculate withdrawals dividing 
   irrigation water use by the reported area in acres feet
-  create a csv groundwater withdrawal file for all the observation data from 2008 - 2020 ( create csv files for individual years)
-Note: convert from ft to mm and replace outlies with the mean + 2*the standardd eviation and remove zero withdrawal values
+  create a csv non zero groundwater withdrawal file for all the observation data from 2008 - 2020 ( create csv files for individual years)
 
 7. Using the unique withdrawal well id, create a shapefile with the lat-long to use for extraction of predictor feature raster value at well location
 
@@ -51,7 +50,7 @@ Note: extract values will be storage Variablename_year.csv
 #############################################
 #### running machine learning 
 14. Run machine learning model- total two models
-  1. Spatio temporal estimate - 9 models
+  1. Spatio temporal estimate - 10 models
   2. Temporal estimate  - 2 model ( run using testing sets for wet and dry years)  by manually changing the test years
   3. Provide for the ml_function the parent directory for the 
  
