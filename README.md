@@ -5,7 +5,7 @@ Groundwater level declines threaten the long-term prospects of many aquifers sup
 The over all description of the project is summarized in [Description](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/blob/main/README_DESCRIPTION.txt) and in step by step guide on how to run the Python scripts in [Steps](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/blob/main/README_STEPS.txt).
 The models are built using [Anaconda](https://www.anaconda.com/download) environment. The libraries used are listed in [Dependencies](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/blob/main/ml_scripts/geospatial_packages.yml) file and can be installed on local computer by copying the code snippet provided below. 
 ```
-conda env create -f  geospatial_packages.yml
+conda env create -f  geospatial.yml
 ```
 # To cite this article
 Dawit W. Asfaw, Ryan Smith, Sayantan Majumdar, Katherine Grote, V. Lakshmi, Bin Fang, J.J. Butler, Brownie Wilson. **Predicting Groundwater Withdrawals Using Machine Learning with Limited Metering Data: Assessment of Training Data Requirements**. []()(2025). [DOI]() 
