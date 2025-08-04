@@ -8,7 +8,7 @@ The models are built using [Anaconda](https://www.anaconda.com/download) environ
 conda env create -f  geospatial.yml
 ```
 # To cite this article
-Asfaw, Dawit Wolday and Smith, Ryan and Majumdar, Sayantan and Grote, Katherine and Fang, Bin and Wilson, Blake B. and Lakshmi, Venkataraman and Butler, James J., Predicting Groundwater Withdrawals Using Machine Learning with Limited Metering Data: Assessment of Training Data Requirements. Available at SSRN: https://ssrn.com/abstract=5177058 or http://dx.doi.org/10.2139/ssrn.5177058 
+Asfaw, Dawit Wolday and Smith, Ryan and Majumdar, Sayantan and Grote, Katherine and Fang, Bin and Wilson, Blake B. and Lakshmi, Venkataraman and Butler, James J., Predicting Groundwater Withdrawals Using Machine Learning with Limited Metering Data: Assessment of Training Data Requirements. Available at [SSRN: https://ssrn.com/abstract=5177058 or http://dx.doi.org/10.2139/ssrn.5177058 ](https://www.sciencedirect.com/science/article/pii/S0378377425004056)
 # Method workflow
 ![image](https://github.com/DawitWAsfaw/Groundwater-ML-Estimates/assets/89609490/bd0b6f3a-8d78-4303-840e-d21d0384d071)
 # Model training and testing data spatial distribution map
